@@ -49,14 +49,18 @@ def extract_details(soup,class_name):
     description = []
     link = []
     for name in class_name:
-        section = soup.find('section',class_=name[1])
-        div_in_sec = section.find_all('div',class_='item item--issue item--link')
-        for item in div_in_sec:
-            category.append(article_category(soup,name[1]))
-            content = item.find('h3',class_='item__title')
-            topic.append(content.find('a').string)
-            description.append(item.find('p').string)
-            link.append(content.find('a').get('href'))
+        try:
+            section = soup.find('section',class_=name[1])
+            div_in_sec = section.find_all('div',class_='item item--issue item--link')
+            for item in div_in_sec:
+                category.append(article_category(soup,name[1]))
+                content = item.find('h3',class_='item__title')
+                topic.append(content.find('a').string)
+                description.append(item.find('p').string)
+                link.append(content.find('a').get('href'))
+        except Exception as e:
+            print(e)
+            continue
     return{
         'category':category,
         'topic':topic,

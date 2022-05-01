@@ -37,15 +37,18 @@ def extract_newsletter(bsoup):
 
     # finding all the anchor tags and extractng the link and string from the anchor tag
     for achr in all_div_news_article:
-        
-        if achr.find('a',class_='thumb-wrapper'):
-            
-            link.append(achr.find('a',class_='thumb-wrapper').get('href'))
-            topic.append(achr.find('a',class_='thumb-wrapper').string)
-        if achr.find('a',class_='title'):
-            
-            link.append(achr.find('a',class_='title').get('href'))
-            topic.append(achr.find('a',class_='title').string)
+        try:
+            if achr.find('a',class_='thumb-wrapper'):
+                
+                link.append(achr.find('a',class_='thumb-wrapper').get('href'))
+                topic.append(achr.find('a',class_='thumb-wrapper').string)
+            if achr.find('a',class_='title'):
+                
+                link.append(achr.find('a',class_='title').get('href'))
+                topic.append(achr.find('a',class_='title').string)
+        except Exception as e:
+            print(e)
+            continue
 
     # removing duplicate links from the link list and adding to the new list "final_link"
     for item in range(0,len(link),2):
